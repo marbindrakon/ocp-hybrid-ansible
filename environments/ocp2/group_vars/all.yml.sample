@@ -1,53 +1,91 @@
+# Base file locations for the playbook, must be writable to the user running ansible-playbook
+base_dir: /home/centos/ocp-ansible
+bin_dir: /home/centos/ocp-ansible/bin
+iso_tmp_dir: "{{base_dir}}"
+build_dir: "{{base_dir}}"
+
+# Utility host settings
 utility_host_packages:
   - httpd
-  - python-flask
   - tmux
-  #- dhcp
   - git
-  - make
-  - gcc
-  - xz-devel
   - genisoimage
   - xorriso
+  - python3-pyvmomi
+  - podman
+  - syslinux
 
 utility_host_services:
   - httpd
 
-utility_host_ip: 172.18.11.25
-utility_http_port: 8080
+isolinux_files:
+  - vesamenu.c32
+  - isolinux.bin
+  - ldlinux.c32
+  - libcom32.c32
 
+utility_host: 172.18.42.211
+utility_host_ilo: "{{utility_host}}"
+utility_http_scheme: http
+utility_http_port: 80
+utility_host_container_runtime: podman
+
+coreos_installer_image: "quay.io/coreos/coreos-installer:release"
+fcct_image: "quay.io/coreos/fcct:release"
+
+
+# General cluster settings
 cluster_name: ocp2
 base_domain: lab.signal9.gg
 fips_mode: false
+utility_ssh_public_key: "REDACTED"
 
-proxy_enabled: true
+# HTTP Proxy Settings
+proxy_enabled: false
 proxy_url: http://172.18.11.25:3128
 no_proxy: ".lab.signal9.gg,172.18.0.0/16,172.31.0.0/16"
+tls_additional_cas: []
+# - |
+#   -----BEGIN CERTIFICATE-----
+#   PEM-format CA cert goes here
+#   -----END CERTIFICATE-----
 
-#tls_additional_cas:
-#  - |
-#    CA CERTIFICATE IN PEM FORMAT 
-
-source_urls:
-  installer: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/openshift-install-linux.tar.gz
-  client: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/openshift-client-linux.tar.gz
-
-  rhcos_kernel: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-installer-kernel-x86_64
-  rhcos_initrd: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-installer-initramfs.x86_64.img
-  rhcos_image: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-metal.x86_64.raw.gz
-
-pull_secret: 'PASTE FROM CLOUD.REDHAT.COM'
-
-manage_firewall: false
-use_dhcp: false
-
-utility_ssh_public_key: "OBTAIN FROM INSTALL HOST"
-
+# Node provisioning settings, may be overwritten in host_vars per-node
+wipe_disks: true
+verify_ilo_serial_number: true
+ilo_pad_serial: true
 deploy_disk: sda
+
+vcenter_host: xna-vcenter.lab.signal9.gg
+vmware_datacenter: XNA
+vmware_datastore: NFS1
+vmware_iso_path: ISO
+vmware_iso_storage: converged_datastore
+
+# Cluster Network Settings
+transpile_nic_configs: false
 domain_name: lab.signal9.gg
+fallback_dns: 172.18.42.10
 nameservers:
   - 172.18.42.10
   - 172.18.42.11
 
+sdn_settings:
+  ipsec_enabled: true
+customize_network_operator_config: true
+
+# Openshift Sources and Pull Secret
+source_urls:
+  installer: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.7/openshift-install-linux.tar.gz
+  client: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.7/openshift-client-linux.tar.gz
+
+  rhcos_kernel: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.7/latest/rhcos-live-kernel-x86_64
+  rhcos_initrd: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.7/latest/rhcos-live-initramfs.x86_64.img
+  rhcos_image: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.7/latest/rhcos-live-rootfs.x86_64.img
+
+# Pull secret may be added to secret.yml instead, comment out if moved.
+pull_secret: 'REDACTED'
+
+# Do not edit, overwrite in host_vars as needed
 interfaces: []
 bonds: []
