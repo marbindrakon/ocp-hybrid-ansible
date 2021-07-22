@@ -1,0 +1,53 @@
+utility_host_packages:
+  - httpd
+  - python-flask
+  - tmux
+  #- dhcp
+  - git
+  - make
+  - gcc
+  - xz-devel
+  - genisoimage
+  - xorriso
+
+utility_host_services:
+  - httpd
+
+utility_host_ip: 172.18.11.25
+utility_http_port: 8080
+
+cluster_name: ocp2
+base_domain: lab.signal9.gg
+fips_mode: false
+
+proxy_enabled: true
+proxy_url: http://172.18.11.25:3128
+no_proxy: ".lab.signal9.gg,172.18.0.0/16,172.31.0.0/16"
+
+#tls_additional_cas:
+#  - |
+#    CA CERTIFICATE IN PEM FORMAT 
+
+source_urls:
+  installer: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/openshift-install-linux.tar.gz
+  client: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.5/openshift-client-linux.tar.gz
+
+  rhcos_kernel: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-installer-kernel-x86_64
+  rhcos_initrd: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-installer-initramfs.x86_64.img
+  rhcos_image: https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.5/latest/rhcos-metal.x86_64.raw.gz
+
+pull_secret: 'PASTE FROM CLOUD.REDHAT.COM'
+
+manage_firewall: false
+use_dhcp: false
+
+utility_ssh_public_key: "OBTAIN FROM INSTALL HOST"
+
+deploy_disk: sda
+domain_name: lab.signal9.gg
+nameservers:
+  - 172.18.42.10
+  - 172.18.42.11
+
+interfaces: []
+bonds: []

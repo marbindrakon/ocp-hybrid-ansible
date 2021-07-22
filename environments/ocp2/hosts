@@ -1,0 +1,42 @@
+all:
+  children:
+    utility:
+      hosts:
+        localhost:
+          ansible_connection: local
+    openshift_nodes:
+      children:
+        bootstraps:
+          hosts:
+             ocp2-bootstrap.lab.signal9.gg:
+              ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+              ansible_ssh_user: core
+              provision: true
+        masters:
+          hosts:
+            ocp2-master-0.lab.signal9.gg:
+              ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+              ansible_ssh_user: core
+              provision: true
+            ocp2-master-1.lab.signal9.gg:
+              ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+              ansible_ssh_user: core
+              provision: true
+            ocp2-master-2.lab.signal9.gg:
+              ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+              ansible_ssh_user: core
+              provision: true
+        workers:
+          hosts:
+            ocp2-worker-1.lab.signal9.gg:
+              ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+              ansible_ssh_user: core
+              provision: true
+            ocp2-worker-2.lab.signal9.gg:
+              ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+              ansible_ssh_user: core
+              provision: true
+            ocp2-worker-0.lab.signal9.gg:
+              ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+              ansible_ssh_user: core
+              provision: true
