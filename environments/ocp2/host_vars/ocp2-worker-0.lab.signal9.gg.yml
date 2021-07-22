@@ -13,14 +13,11 @@ vlans:
     tag: 10
 interfaces:
   - name: bond1.10
-    ipxe_name: net2
-    ipxe_vlan: 10
     ip_address: 172.18.0.69
     ip_netmask: 255.255.255.0
     gateway: 172.18.0.1
 disabled_interfaces:
   - bond0
-#  - bond1
 ilo_host: ilo-hp-blade-5.oob.signal9.gg
 pm_type: ilo
 short_name: ocp2-worker-0

@@ -3,7 +3,6 @@ boot_if: ens192
 standalone_interfaces: ['ens192']
 interfaces:
   - name: ens192
-    ipxe_name: net0
     ip_address: 172.18.0.71
     ip_netmask: 255.255.255.0
     gateway: 172.18.0.1
