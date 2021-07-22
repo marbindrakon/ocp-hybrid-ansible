@@ -39,4 +39,4 @@ all:
             ocp2-worker-0.lab.signal9.gg:
               ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
               ansible_ssh_user: core
-              provision: true
+              provision: false
