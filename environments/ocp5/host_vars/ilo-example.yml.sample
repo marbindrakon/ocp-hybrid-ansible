@@ -1,0 +1,23 @@
+role: worker
+boot_if: bond1.10
+standalone_interfaces: ['eno1', 'eno2']
+bonds:
+  - name: bond0
+    interfaces: ["eno1","eno2"]
+    options: "mode=active-backup"
+  - name: bond1
+    interfaces: ["eno3", "eno3d1"]
+    options: "mode=active-backup"
+vlans:
+  - device: bond1
+    tag: 10
+interfaces:
+  - name: bond1.10
+    ip_address: 172.18.0.69
+    ip_netmask: 255.255.255.0
+    gateway: 172.18.0.1
+disabled_interfaces:
+  - bond0
+ilo_host: ilo-hp-blade-5.oob.signal9.gg
+pm_type: ilo
+short_name: ocp5-worker-0

@@ -1,0 +1,20 @@
+role: worker
+boot_if: eno3.10
+standalone_interfaces: ['eno1', 'eno2']
+bonds:
+  - name: bond0
+    interfaces: ["eno1","eno2"]
+    options: "mode=active-backup"
+vlans:
+  - device: eno3
+    tag: 10
+interfaces:
+  - name: eno3.10
+    ip_address: 172.18.0.71
+    ip_netmask: 255.255.255.0
+    gateway: 172.18.0.1
+disabled_interfaces:
+  - bond0
+ilo_host: ilo-hp-blade-8.oob.signal9.gg
+pm_type: ilo
+short_name: ocp5-worker-2
