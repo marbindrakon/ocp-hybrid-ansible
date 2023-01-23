@@ -14,9 +14,6 @@ utility_host_packages:
   - python3-pyvmomi
   - podman
   - syslinux
-  - gzip
-  - xz
-  - cpio
 
 utility_host_services:
   - httpd
